@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Intake {
 
-    //Declare motor objects
     private final CRServo intakeServo;
     private final DcMotor storeMotor;
 
@@ -21,31 +20,16 @@ public class Intake {
      *                    on the actual robot
      */
     public Intake(HardwareMap hardwareMap) {
-        /*
-         * This lines of code links the DcMotor 'myMotor' to the port on the control/expansion hub
-         * labeled "motor1"
-         * This 'labeling' can be done on the Driver Station by clicking on the three dots
-         * in the upper right corner and then going to 'Configure Robot'
-         */
         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
         storeMotor = hardwareMap.get(DcMotor.class, "storeMotor");
 
-        /*
-         * Normally a DC motors runs in the clockwise direction for positive values
-         * If positive values need to correspond to counter clockwise rotation,
-         * for example for a drivetrain, the motor can be reversed
-         */
-        /*
-         * Tell the motors to use the integrated encoders
-         * This gives a bit more precision while controlling the motors
-         */
         storeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // set the motor's zero power behavior to brake
         storeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
-    //all of the following functions need to be tuned and tested
+
     public void setIntakeServoSpeed(double speed){
         intakeServo.setPower(speed);
     }
