@@ -81,4 +81,11 @@ public class MecanumDrivetrain {
     public Boolean isBusy() {
         return leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy();
     }
+
+    public void stopAll(){
+        leftFront.setPower(0);
+        leftBack.setPower(0);
+        rightFront.setPower(0);
+        rightBack.setPower(0);
+    }
 }
