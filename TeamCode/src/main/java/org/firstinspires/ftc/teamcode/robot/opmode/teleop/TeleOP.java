@@ -89,14 +89,18 @@ public class TeleOP extends OpMode
 
 
         //lift
-        if (gamepad2.left_stick_y > 0){
-            lift.moveLift(true);
-        } else if (gamepad2.left_stick_y < 0){
-            lift.moveLift(false);
+        if (gamepad2.left_stick_y < 0){
+            lift.moveLift(gamepad2.left_stick_y);
+        } else {
+            lift.moveLift(gamepad2.left_stick_y * 0.5);
         }
 
         //bakje lift
-        lift.moveServo(gamepad1.right_bumper);
+        if (gamepad1.right_bumper) {
+            lift.moveServo(0.75);
+        } else {
+            lift.moveServo(-0.75);
+        }
 
         //Intake servo
         if (gamepad2.right_bumper) {
@@ -108,11 +112,7 @@ public class TeleOP extends OpMode
         }
 
         //intake
-        if (gamepad2.right_stick_y > 0){
-            intake.moveIntake(true);
-        } else if (gamepad2.right_stick_y < 0) {
-            intake.moveIntake(false);
-        }
+        intake.moveIntake(gamepad2.right_stick_y / 5);
 
         //CLimber
         if (gamepad2.left_trigger!=0){
@@ -122,6 +122,7 @@ public class TeleOP extends OpMode
         } else {
             climber.setClimberSpeed(0.0);
         }
+
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

@@ -21,18 +21,22 @@ public class Intake {
 
     //TODO tune the values
     //true is to intake position false is to store position
-    public void moveIntake(boolean direction) {
+    public void moveIntakePosition(boolean direction) {
         //if true
         if (direction) {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(200);
+            storeMotor.setTargetPosition(-423);
         }
         //if false
         else {
-            storeMotor.setPower(-0.2);
-            storeMotor.setTargetPosition(0);
+            storeMotor.setPower(0.2);
+            storeMotor.setTargetPosition(-14);
         }
         storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void moveIntake(double speed){
+        storeMotor.setPower(speed);
     }
 
     public void setIntakeServoSpeed(double speed){

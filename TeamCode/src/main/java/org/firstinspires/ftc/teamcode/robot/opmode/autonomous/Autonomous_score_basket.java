@@ -41,19 +41,20 @@ public class Autonomous_score_basket extends LinearOpMode {
         mecanumDrivetrain.mecanumDrive(0, 0, -0.5);
         sleep(400);
         mecanumDrivetrain.stopAll();
-        intake.moveIntake(true);
+        intake.moveIntakePosition(false);
         sleep(500);
-        lift.moveLift(true);
+        lift.moveLiftPosition(true);
         mecanumDrivetrain.mecanumDrive(0, -0.2, 0);
         sleep(300);
         mecanumDrivetrain.stopAll();
-        lift.moveServo(false);
+        lift.moveServo(0);
         sleep(2500);
-        lift.moveServo(true);
+        lift.moveServo(0.2);
         sleep(1000);
         mecanumDrivetrain.mecanumDrive(0, 0.2, 0);
         sleep(600);
         mecanumDrivetrain.stopAll();
-        lift.moveLift(false);
+        lift.moveLiftPosition(false);
+        sleep(10000);
     }
 }
