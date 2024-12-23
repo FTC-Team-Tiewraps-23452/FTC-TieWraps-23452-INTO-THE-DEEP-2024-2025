@@ -15,4 +15,16 @@ public class Climber {
 
     public void setClimberSpeed(double speed){climberMotor.setPower(speed);
     }
+    public void setClimberPosition(boolean direction){
+
+        if (!direction){
+            climberMotor.setTargetPosition(500);
+            climberMotor.setPower(0.3);
+        }
+        else {
+            climberMotor.setTargetPosition(0);
+            climberMotor.setPower(-0.3);
+        }
+        climberMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
 }

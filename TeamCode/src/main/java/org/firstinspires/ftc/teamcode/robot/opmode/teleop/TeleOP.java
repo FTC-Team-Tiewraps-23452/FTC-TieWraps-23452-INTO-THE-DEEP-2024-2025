@@ -116,11 +116,9 @@ public class TeleOP extends OpMode
 
         //CLimber
         if (gamepad2.left_trigger!=0){
-            climber.setClimberSpeed(0.2);
+            climber.setClimberPosition(true);
         } else if (gamepad2.right_trigger!=0){
-            climber.setClimberSpeed(-0.2);
-        } else {
-            climber.setClimberSpeed(0.0);
+            climber.setClimberPosition(false);
         }
 
         // Show the elapsed game time and wheel power.
