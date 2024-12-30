@@ -16,10 +16,9 @@ public class Lift {
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftServo = hardwareMap.get(Servo.class, "storeBoxServo");
 
-        liftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         liftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         liftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-
         liftServo.setDirection(Servo.Direction.FORWARD);
     }
 

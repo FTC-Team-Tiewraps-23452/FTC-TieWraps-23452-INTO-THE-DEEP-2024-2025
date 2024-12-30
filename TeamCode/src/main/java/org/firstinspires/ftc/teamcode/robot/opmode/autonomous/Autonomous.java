@@ -42,9 +42,6 @@ public class Autonomous extends LinearOpMode {
         runtime.reset();
 
         rotate(180);
-        drive(50);
-
-
     }
 
     private void drive(double driveDistance) {
@@ -58,9 +55,9 @@ public class Autonomous extends LinearOpMode {
     private void rotate(double rotaionAngle) {
         imu.resetYaw();
         while (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) <= rotaionAngle - 4 || imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) >= rotaionAngle + 4 && opModeIsActive()) {
-            while (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) < 90 && opModeIsActive()) {
+            if (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) > 180 && opModeIsActive()) {
                 mecanumDrivetrain.mecanumDrive(0, 0, 0.05);
-            } while (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) >= 90 && opModeIsActive()) {
+            } if (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) <= 180 && opModeIsActive()) {
                 mecanumDrivetrain.mecanumDrive(0, 0, -0.05);
             }
         }
