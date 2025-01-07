@@ -41,8 +41,8 @@ public class Autonomous extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        rotate(180);
-        drive(50);
+        rotate(90);
+//        drive(50);
 
 
     }
@@ -59,9 +59,10 @@ public class Autonomous extends LinearOpMode {
         imu.resetYaw();
         while (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) <= rotaionAngle - 4 || imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) >= rotaionAngle + 4 && opModeIsActive()) {
             if (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) < 180 && opModeIsActive()) {
-                mecanumDrivetrain.mecanumDrive(0, 0, 0.05);
-            } else if (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) >= 180 && opModeIsActive()) {
-                mecanumDrivetrain.mecanumDrive(0, 0, -0.05);
+                mecanumDrivetrain.mecanumDrive(0, 0, 0.02);
+            }
+            if (imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES) >= 180 && opModeIsActive()) {
+                mecanumDrivetrain.mecanumDrive(0, 0, -0.02);
             }
         }
     }
