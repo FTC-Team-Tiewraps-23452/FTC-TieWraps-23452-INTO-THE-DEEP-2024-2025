@@ -12,11 +12,8 @@ public class Intake {
     public Intake(HardwareMap hardwareMap) {
         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
         storeMotor = hardwareMap.get(DcMotor.class, "storeMotor");
-
-        storeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // set the motor's zero power behavior to brake
         storeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        storeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     //TODO tune the values
