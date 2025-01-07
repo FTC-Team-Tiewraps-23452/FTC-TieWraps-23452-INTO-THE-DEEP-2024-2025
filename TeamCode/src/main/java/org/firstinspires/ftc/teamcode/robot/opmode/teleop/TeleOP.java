@@ -74,56 +74,59 @@ public class TeleOP extends OpMode
         telemetry.addData("intake", "position" + intake.intakeValues());
         telemetry.addData("lift", "position" + lift.liftValues());
 
-
         //drivetrain
-      if (gamepad1.left_bumper){
-          double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-          double x = gamepad1.left_stick_x;
-          double rx = -gamepad1.right_stick_x;
-          mecanumDrivetrain.mecanumDrive(x, y, rx);
-      } else {
-          double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-          double x = gamepad1.left_stick_x;
-          double rx = -gamepad1.right_stick_x;
-          mecanumDrivetrain.mecanumDrive(x / 4,y / 4,rx / 4);
-      }
+        if (gamepad1.left_bumper){
+            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+            double x = gamepad1.left_stick_x;
+            double rx = -gamepad1.right_stick_x;
+            mecanumDrivetrain.mecanumDrive(x, y, rx);
+        }if (gamepad1.left_trigger !=0){
+            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+            double x = gamepad1.left_stick_x;
+            double rx = -gamepad1.right_stick_x;
+            mecanumDrivetrain.mecanumDrive(x / 15, y / 15, rx / 15);
+        }else {
+            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+            double x = gamepad1.left_stick_x;
+            double rx = -gamepad1.right_stick_x;
+            mecanumDrivetrain.mecanumDrive(x / 5,y / 5,rx / 5);
+        }
 
 
-      // lift
-      if (gamepad2.left_stick_y > 0){
-          lift.setLiftSpeed(gamepad2.left_stick_y * 0.5);
-      } else {
-          lift.setLiftSpeed(gamepad2.left_stick_y);
-      }
+        //lift
+        if (gamepad2.left_stick_y < 0){
+            lift.moveLift(gamepad2.left_stick_y);
+        } else {
+            lift.moveLift(gamepad2.left_stick_y * 0.5);
+        }
 
-      // bakje lift
-      if (gamepad1.right_bumper){
-          lift.setServoPosition(0);
-      }
-      else {
-          lift.setServoPosition(0.2);
-      }
+        //bakje lift
+        if (gamepad1.right_bumper) {
+            lift.moveServo(0.80);
+        } else {
+            lift.moveServo(1);
+        }
 
-      //Intake servo
-      if (gamepad2.right_bumper) {
-          intake.setIntakeServoSpeed(1.0);
-      } else if (gamepad2.left_bumper){
-          intake.setIntakeServoSpeed(-1.0);
-      } else {
-           intake.setIntakeServoSpeed(0.0);
-      }
+        //Intake servo
+        if (gamepad2.right_bumper) {
+            intake.setIntakeServoSpeed(1.0);
+        } else if (gamepad2.left_bumper){
+            intake.setIntakeServoSpeed(-1.0);
+        } else {
+            intake.setIntakeServoSpeed(0.0);
+        }
 
-      //intake
-      intake.setIntakeSpeed(gamepad2.right_stick_y / 5);
+        //intake
+        intake.moveIntake(gamepad2.right_stick_y / 5);
 
-      //CLimber
-    if (gamepad2.left_trigger!=0){
-        climber.setClimberSpeed(0.2);
-    } else if (gamepad2.right_trigger!=0){
-        climber.setClimberSpeed(-0.2);
-    } else {
-        climber.setClimberSpeed(0.0);
-    }
+        //CLimber
+        if (gamepad2.left_trigger!=0){
+            climber.setClimberSpeed(0.2);
+        } else if (gamepad2.right_trigger!=0){
+            climber.setClimberSpeed(-0.2);
+        } else {
+            climber.setClimberSpeed(0.0);
+        }
 
 
         // Show the elapsed game time and wheel power.

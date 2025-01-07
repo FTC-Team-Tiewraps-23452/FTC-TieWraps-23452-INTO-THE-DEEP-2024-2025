@@ -4,16 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-
-/**
- * This file is an example of how to define a mecanum drivetrain in your code.
- * It is structured in the same way as the ExampleSubsystem
-
- * Different functions of the drivetrain have been defined, but not yet fully worked out
- */
 public class MecanumDrivetrain {
 
-    //Declare motor and servo objects
     private final DcMotor rightFront;
     private final DcMotor leftFront;
     private final DcMotor rightBack;
@@ -31,39 +23,19 @@ public class MecanumDrivetrain {
      *                    on the actual robot
      */
     public MecanumDrivetrain(HardwareMap hardwareMap){
-        /*
-         * These lines of code links the DcMotors to the ports on the control/expansion hub
-         * with the corresponding labels (deviceName)
-         * This 'labeling' can be done on the Driver Station by clicking on the three dots
-         * in the upper right corner and then going to 'Configure Robot'
-         */
         rightFront = hardwareMap.get(DcMotor.class, "motor0");
         leftFront =  hardwareMap.get(DcMotor.class, "motor1");
         rightBack =  hardwareMap.get(DcMotor.class, "motor2");
         leftBack =  hardwareMap.get(DcMotor.class, "motor3");
 
-        /*
-         * Normally a DC motors runs in the clockwise direction for positive values
-         * If positive values need to correspond to counter clockwise rotation,
-         * for example for a drivetrain, the motor can be reversed
-         * Usually the left side of the drivetrain needs to be reversed,
-         * but this should always be checked to be sure
-         */
         rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        /*
-         * Tell the motors to use the integrated encoders
-         * This gives a bit more precision while controlling the motors
-         */
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        /* put the motors on brake mode
-         * this gives more precision while driving
-         */
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -71,12 +43,6 @@ public class MecanumDrivetrain {
 
 
     }
-
-    /*
-     * After the constructor the functions of the subsystem can be defined.
-     * The main function of a drivetrain is, of course, driving.
-     * This has been defined below for different types of drivetrains
-     */
 
     public void mecanumDrive(double x, double y, double rx){
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -114,5 +80,12 @@ public class MecanumDrivetrain {
 
     public Boolean isBusy() {
         return leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy();
+    }
+
+    public void stopAll(){
+        leftFront.setPower(0);
+        leftBack.setPower(0);
+        rightFront.setPower(0);
+        rightBack.setPower(0);
     }
 }
