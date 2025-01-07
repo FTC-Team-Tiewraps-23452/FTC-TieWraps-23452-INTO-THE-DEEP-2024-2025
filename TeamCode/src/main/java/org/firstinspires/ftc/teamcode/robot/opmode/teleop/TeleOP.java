@@ -73,7 +73,10 @@ public class TeleOP extends OpMode
 
         telemetry.addData("intake", "position" + intake.intakeValues());
         telemetry.addData("lift", "position" + lift.liftValues());
-
+        telemetry.addData("leftFront", "position" + mecanumDrivetrain.leftFrontValues());
+        telemetry.addData("leftBack", "position" + mecanumDrivetrain.leftBackValues());
+        telemetry.addData("rightFront", "position" + mecanumDrivetrain.rightFrontValues());
+        telemetry.addData("rightBack", "position" + mecanumDrivetrain.rightBackValues());
 
         //drivetrain
       if (gamepad1.left_bumper){

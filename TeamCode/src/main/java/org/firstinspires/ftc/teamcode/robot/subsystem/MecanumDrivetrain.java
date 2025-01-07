@@ -30,7 +30,7 @@ public class MecanumDrivetrain {
      *                    to link the motors and servos in the code to the motors and servos
      *                    on the actual robot
      */
-    public MecanumDrivetrain(HardwareMap hardwareMap){
+    public MecanumDrivetrain(HardwareMap hardwareMap) {
         /*
          * These lines of code links the DcMotors to the ports on the control/expansion hub
          * with the corresponding labels (deviceName)
@@ -38,9 +38,9 @@ public class MecanumDrivetrain {
          * in the upper right corner and then going to 'Configure Robot'
          */
         rightFront = hardwareMap.get(DcMotor.class, "motor0");
-        leftFront =  hardwareMap.get(DcMotor.class, "motor1");
-        rightBack =  hardwareMap.get(DcMotor.class, "motor2");
-        leftBack =  hardwareMap.get(DcMotor.class, "motor3");
+        leftFront = hardwareMap.get(DcMotor.class, "motor1");
+        rightBack = hardwareMap.get(DcMotor.class, "motor2");
+        leftBack = hardwareMap.get(DcMotor.class, "motor3");
 
         /*
          * Normally a DC motors runs in the clockwise direction for positive values
@@ -78,7 +78,7 @@ public class MecanumDrivetrain {
      * This has been defined below for different types of drivetrains
      */
 
-    public void mecanumDrive(double x, double y, double rx){
+    public void mecanumDrive(double x, double y, double rx) {
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -90,7 +90,7 @@ public class MecanumDrivetrain {
         rightBack.setPower((y + x - rx));
     }
 
-    public void mecanumDrivePosition(int position){
+    public void mecanumDrivePosition(int position) {
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -114,5 +114,22 @@ public class MecanumDrivetrain {
 
     public Boolean isBusy() {
         return leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy();
+    }
+
+    public int leftFrontValues() {
+        return leftFront.getCurrentPosition();
+    }
+
+    public int leftBackValues() {
+        return leftBack.getCurrentPosition();
+    }
+
+    public int rightFrontValues() {
+        return rightFront.getCurrentPosition();
+    }
+
+    public int rightBackValues() {
+        return rightBack.getCurrentPosition();
+
     }
 }
