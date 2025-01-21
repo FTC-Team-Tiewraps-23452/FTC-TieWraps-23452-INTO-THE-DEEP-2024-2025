@@ -32,7 +32,7 @@ public class Autonomous_score_basket extends LinearOpMode {
         runtime.reset();
 
 
-        // cycle 1
+        // cycle 1h
         mecanumDrivetrain.mecanumDrive(-1, 0, 0);
         sleep(950);
         mecanumDrivetrain.mecanumDrive(0.75, 0, 0);
