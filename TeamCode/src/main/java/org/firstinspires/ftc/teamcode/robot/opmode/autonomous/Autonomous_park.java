@@ -28,8 +28,8 @@ public class Autonomous_park extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        mecanumDrivetrain.mecanumDrive(0, 1, 0);
-        sleep(800);
+        mecanumDrivetrain.mecanumDrive(0, 0.4, 0);
+        sleep(600);
         mecanumDrivetrain.mecanumDrive(0, 0, 0);
 
         }
