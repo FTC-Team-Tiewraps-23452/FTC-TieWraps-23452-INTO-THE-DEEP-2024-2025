@@ -56,7 +56,7 @@ public class MecanumDrivetrain {
         rightBack.setPower((y + x - rx));
     }
 
-    public void mecanumDrivePosition(int position){
+    public void mecanumDrivePosition(int position, double speed){
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -72,10 +72,10 @@ public class MecanumDrivetrain {
         rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftFront.setPower(0.5);
-        leftBack.setPower(0.5);
-        rightFront.setPower(0.5);
-        rightBack.setPower(0.5);
+        leftFront.setPower(speed);
+        leftBack.setPower(speed);
+        rightFront.setPower(speed);
+        rightBack.setPower(speed);
     }
 
     public Boolean isBusy() {
