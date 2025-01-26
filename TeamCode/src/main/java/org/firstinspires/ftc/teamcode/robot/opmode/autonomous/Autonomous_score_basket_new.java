@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.robot.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.robot.subsystem.MecanumDrivetrain;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous score basket", group="Linear OpMode")
-public class Autonomous_score_basket extends LinearOpMode {
+public class Autonomous_score_basket_new extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
 
@@ -33,31 +33,26 @@ public class Autonomous_score_basket extends LinearOpMode {
 
 
         // cycle 1h
-        mecanumDrivetrain.mecanumDrive(-1, 0, 0);
-        sleep(950);
-        mecanumDrivetrain.mecanumDrive(0.75, 0, 0);
-        sleep(200);
-        mecanumDrivetrain.stopAll();
-        mecanumDrivetrain.mecanumDrive(0, 0, -0.5);
-        sleep(400);
-        mecanumDrivetrain.stopAll();
+        lift.moveServo(-0.75);
+        mecanumDrivetrain.mecanumDrive(0, -0.1, 0);
         intake.moveIntakePosition(false);
-        sleep(500);
+        sleep(750);
+        mecanumDrivetrain.stopAll();
         lift.moveLiftPosition(true);
         sleep(2000);
-        mecanumDrivetrain.mecanumDrive(0, -0.2, 0);
-        sleep(400);
+        mecanumDrivetrain.mecanumDrive(0, -0.1, 0);
+        sleep(800);
         mecanumDrivetrain.stopAll();
-        sleep(3000);
+        sleep(500);
         lift.moveServo(0.75);
         sleep(1500);
         lift.moveServo(-0.75);
         sleep(1000);
-        mecanumDrivetrain.mecanumDrive(0, 0.2, 0);
-        sleep(600);
+        mecanumDrivetrain.mecanumDrive(0, 0.1, 0);
+        sleep(1200);
         mecanumDrivetrain.stopAll();
-        sleep(100);
+        sleep(300);
         lift.moveLiftPosition(false);
-        sleep(10000);
+        sleep(3000);
     }
 }

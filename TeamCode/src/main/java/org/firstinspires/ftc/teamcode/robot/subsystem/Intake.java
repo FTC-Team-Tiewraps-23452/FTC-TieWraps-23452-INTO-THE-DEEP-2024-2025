@@ -16,18 +16,17 @@ public class Intake {
         storeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    //TODO tune the values
     //true is to intake position false is to store position
     public void moveIntakePosition(boolean direction) {
         //if true
         if (direction) {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(-423);
+            storeMotor.setTargetPosition(-3);
         }
         //if false
         else {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(-14);
+            storeMotor.setTargetPosition(416);
         }
         storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }

@@ -88,4 +88,8 @@ public class MecanumDrivetrain {
         rightFront.setPower(0);
         rightBack.setPower(0);
     }
+
+    public double rightFrontValues(){
+        return rightFront.getCurrentPosition();
+    }
 }
