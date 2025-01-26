@@ -40,6 +40,8 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         sleep(1500);
         lift.moveServo(-0.75);
         drive(50, 0.2);
+        lift.moveLiftPosition(false);
+        sleep(2000);
     }
 
 
