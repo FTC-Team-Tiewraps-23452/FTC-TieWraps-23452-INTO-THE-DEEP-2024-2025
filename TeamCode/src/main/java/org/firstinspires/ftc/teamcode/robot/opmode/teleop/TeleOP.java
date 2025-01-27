@@ -68,7 +68,11 @@ public class TeleOP extends OpMode
     @Override
     public void loop() {
 
-        telemetry.addData("drivetrain", mecanumDrivetrain.rightFrontValues());
+        telemetry.addData("drivetrain", "rightFront: " + mecanumDrivetrain.rightFrontValues());
+        telemetry.addData("drivetrain", "leftFront: " + mecanumDrivetrain.leftFrontValues());
+        telemetry.addData("drivetrain", "rightBack: " + mecanumDrivetrain.rightBackValues());
+        telemetry.addData("drivetrain", "leftBack: " + mecanumDrivetrain.leftBackValues());
+
         telemetry.addData("intake", "position" + intake.intakeValues());
         telemetry.addData("lift", "position" + lift.liftValues());
 

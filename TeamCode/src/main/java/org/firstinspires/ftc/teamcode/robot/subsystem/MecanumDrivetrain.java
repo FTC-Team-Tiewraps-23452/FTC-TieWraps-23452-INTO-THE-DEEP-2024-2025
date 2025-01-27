@@ -78,6 +78,13 @@ public class MecanumDrivetrain {
         rightBack.setPower(speed);
     }
 
+    public boolean onPosition(int position){
+        return (leftFront.getCurrentPosition() == position &&
+                rightFront.getCurrentPosition() == position &&
+                leftBack.getCurrentPosition() == position &&
+                rightBack.getCurrentPosition() == position);
+    }
+
     public Boolean isBusy() {
         return leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy();
     }
@@ -91,5 +98,14 @@ public class MecanumDrivetrain {
 
     public double rightFrontValues(){
         return rightFront.getCurrentPosition();
+    }
+    public double leftFrontValues(){
+        return leftFront.getCurrentPosition();
+    }
+    public double rightBackValues(){
+        return rightBack.getCurrentPosition();
+    }
+    public double leftBackValues(){
+        return leftBack.getCurrentPosition();
     }
 }

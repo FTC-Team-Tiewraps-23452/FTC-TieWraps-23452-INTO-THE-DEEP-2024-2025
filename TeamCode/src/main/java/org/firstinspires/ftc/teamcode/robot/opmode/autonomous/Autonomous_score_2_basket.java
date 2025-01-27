@@ -31,7 +31,7 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         runtime.reset();
 
         lift.moveServo(-0.75);
-        drive(-100, 0.1);
+        drive(-20, 0.1);
         intake.moveIntakePosition(false);
         lift.moveLiftPosition(true);
         sleep(2000);
@@ -39,14 +39,17 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         lift.moveServo(0.75);
         sleep(1500);
         lift.moveServo(-0.75);
-        drive(50, 0.2);
+        drive(70, 0.2);
         lift.moveLiftPosition(false);
         sleep(2000);
     }
 
 
-    private void drive(double driveDistance, double speed) {
-        double tick_target = driveDistance / TICKS_PER_CENTIMETER;
-        mecanumDrivetrain.mecanumDrivePosition((int)tick_target, speed);
-    }
+        private void drive(double driveDistance, double speed) {
+            double tick_target = driveDistance / TICKS_PER_CENTIMETER;
+            mecanumDrivetrain.mecanumDrivePosition((int)tick_target, speed);
+            if (mecanumDrivetrain.onPosition((int)tick_target)) {
+                mecanumDrivetrain.stopAll();
+            }
+        }
 }
