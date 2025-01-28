@@ -3,7 +3,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.robot.subsystem.*;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="Linear OpMode")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous score 2 basket", group="Linear OpMode")
 public class Autonomous_score_2_basket extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
@@ -30,18 +30,20 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        lift.moveServo(-0.75);
-        drive(-20, 0.1);
-        intake.moveIntakePosition(false);
-        lift.moveLiftPosition(true);
-        sleep(2000);
-        drive(-20, 0.1);
-        lift.moveServo(0.75);
-        sleep(1500);
-        lift.moveServo(-0.75);
-        drive(70, 0.2);
-        lift.moveLiftPosition(false);
-        sleep(2000);
+//        lift.moveServo(-0.75);
+//        drive(-20, 0.1);
+//        intake.moveIntakePosition(false);
+//        lift.moveLiftPosition(true);
+//        sleep(2000);
+//        drive(-20, 0.1);
+//        lift.moveServo(0.75);
+//        sleep(1500);
+//        lift.moveServo(-0.75);
+//        drive(70, 0.2);
+//        lift.moveLiftPosition(false);
+//        sleep(2000);
+
+
     }
 
     /**
