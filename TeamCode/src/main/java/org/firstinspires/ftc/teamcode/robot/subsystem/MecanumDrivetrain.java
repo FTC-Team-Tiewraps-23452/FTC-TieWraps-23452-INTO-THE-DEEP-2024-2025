@@ -16,7 +16,7 @@ public class MecanumDrivetrain {
      * This is the constructor of the subsystem
      * This is the function that will be run when the subsystem is created,
      * which happens at the beginning of an OpMode.
-     * The constructor should have the same name as the class (ExampleMecanumDrivetrain in this case).
+     * The constructor should have the same name as the class
      *
      * @param hardwareMap This is the input of the constructor, which will be used
      *                    to link the motors and servos in the code to the motors and servos
@@ -44,6 +44,14 @@ public class MecanumDrivetrain {
 
     }
 
+    /**
+     * a function to move the mecanum drivetrain with a specific speed
+     * with an x, y and rx parameter
+     *
+     * @param x the speed in the x axis from -1 to 1
+     * @param y the speed in the y axis from -1 to 1
+     * @param rx the speed to turn around the z axis from -1 to 1
+     */
     public void mecanumDrive(double x, double y, double rx){
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -56,6 +64,12 @@ public class MecanumDrivetrain {
         rightBack.setPower((y + x - rx));
     }
 
+    /**
+     * a function to move the mecanum drivetrain a specific distace with a speed and position
+     *
+     * @param position the position in cm from the robot
+     * @param speed the specific speed to go to the position from -1 to 1
+     */
     public void mecanumDrivePosition(int position, double speed){
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -78,17 +92,31 @@ public class MecanumDrivetrain {
         rightBack.setPower(speed);
     }
 
+    /**
+     * a function to check if the robot is on its desired position
+     *
+     * @param position the desired position in ticks
+     * @return returns true or false depending on if its on the desired position
+     */
     public boolean onPosition(int position){
         return (leftFront.getCurrentPosition() <= position + 5 && leftFront.getCurrentPosition() >= position - 5 &&
-                rightFront.getCurrentPosition() == position + 5 && rightBack.getCurrentPosition() >= position - 5 &&
-                leftBack.getCurrentPosition() == position + 5 && leftBack.getCurrentPosition() >= position - 5 &&
-                rightBack.getCurrentPosition() == position + 5 && rightBack.getCurrentPosition() >= position - 5);
+                rightFront.getCurrentPosition() <= position + 5 && rightBack.getCurrentPosition() >= position - 5 &&
+                leftBack.getCurrentPosition() <= position + 5 && leftBack.getCurrentPosition() >= position - 5 &&
+                rightBack.getCurrentPosition() <= position + 5 && rightBack.getCurrentPosition() >= position - 5);
     }
 
+    /**
+     * a function to check if the drivetrain motors are busy
+     *
+     * @return returns true or false depending on if the drivetrain is busy or not
+     */
     public Boolean isBusy() {
         return leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy();
     }
 
+    /**
+     * a function to stop all of the drivetrain motors
+     */
     public void stopAll(){
         leftFront.setPower(0);
         leftBack.setPower(0);
@@ -96,15 +124,38 @@ public class MecanumDrivetrain {
         rightBack.setPower(0);
     }
 
+    /**
+     * function to read the right front motor position
+     *
+     * @return returns the current position
+     */
     public double rightFrontValues(){
         return rightFront.getCurrentPosition();
     }
+
+    /**
+     * function to read the left front motor position
+     *
+     * @return returns the current position
+     */
     public double leftFrontValues(){
         return leftFront.getCurrentPosition();
     }
+
+    /**
+     * function to read the right back motor position
+     *
+     * @return returns the current position
+     */
     public double rightBackValues(){
         return rightBack.getCurrentPosition();
     }
+
+    /**
+     * function to read the left back motor position
+     *
+     * @return returns the current position
+     */
     public double leftBackValues(){
         return leftBack.getCurrentPosition();
     }

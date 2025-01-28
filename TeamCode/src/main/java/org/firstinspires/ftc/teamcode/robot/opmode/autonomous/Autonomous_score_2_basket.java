@@ -44,12 +44,17 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         sleep(2000);
     }
 
-
-        private void drive(double driveDistance, double speed) {
-            double tick_target = driveDistance / TICKS_PER_CENTIMETER;
-            mecanumDrivetrain.mecanumDrivePosition((int)tick_target, speed);
-            if (mecanumDrivetrain.onPosition((int)tick_target)) {
-                mecanumDrivetrain.stopAll();
-            }
+    /**
+     * function to drive to calculate and run the movement to a desired position
+     *
+     * @param driveDistance the distance desired to be driven in cm from the robot
+     * @param speed the peed to drive this distance from -1 to 1.
+     */
+    private void drive(double driveDistance, double speed) {
+        double tick_target = driveDistance / TICKS_PER_CENTIMETER;
+        mecanumDrivetrain.mecanumDrivePosition((int)tick_target, speed);
+        if (mecanumDrivetrain.onPosition((int)tick_target)) {
+            mecanumDrivetrain.stopAll();
         }
+    }
 }
