@@ -79,10 +79,10 @@ public class MecanumDrivetrain {
     }
 
     public boolean onPosition(int position){
-        return (leftFront.getCurrentPosition() == position &&
-                rightFront.getCurrentPosition() == position &&
-                leftBack.getCurrentPosition() == position &&
-                rightBack.getCurrentPosition() == position);
+        return (leftFront.getCurrentPosition() <= position + 5 && leftFront.getCurrentPosition() >= position - 5 &&
+                rightFront.getCurrentPosition() == position + 5 && rightBack.getCurrentPosition() >= position - 5 &&
+                leftBack.getCurrentPosition() == position + 5 && leftBack.getCurrentPosition() >= position - 5 &&
+                rightBack.getCurrentPosition() == position + 5 && rightBack.getCurrentPosition() >= position - 5);
     }
 
     public Boolean isBusy() {
