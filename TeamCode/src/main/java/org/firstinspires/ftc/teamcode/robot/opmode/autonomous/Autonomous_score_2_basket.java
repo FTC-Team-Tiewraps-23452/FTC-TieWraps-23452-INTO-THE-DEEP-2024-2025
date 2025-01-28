@@ -30,18 +30,18 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-//        lift.moveServo(-0.75);
-//        drive(-20, 0.1);
-//        intake.moveIntakePosition(false);
-//        lift.moveLiftPosition(true);
-//        sleep(2000);
-//        drive(-20, 0.1);
-//        lift.moveServo(0.75);
-//        sleep(1500);
-//        lift.moveServo(-0.75);
-//        drive(70, 0.2);
-//        lift.moveLiftPosition(false);
-//        sleep(2000);
+        lift.moveServo(-0.75);
+        drive(-20, 0.1);
+        intake.moveIntakePosition(false);
+        lift.moveLiftPosition(true);
+        sleep(2000);
+        drive(-20, 0.1);
+        lift.moveServo(0.75);
+        sleep(1500);
+        lift.moveServo(-0.75);
+        drive(70, 0.2);
+        lift.moveLiftPosition(false);
+        sleep(2000);
 
 
     }
