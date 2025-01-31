@@ -92,4 +92,14 @@ public class MecanumDrivetrain {
     public double rightFrontValues(){
         return rightFront.getCurrentPosition();
     }
+    public double rightBackValues(){
+        return rightBack.getCurrentPosition();
+    }
+    public double leftFrontValues(){
+        return leftFront.getCurrentPosition();
+    }
+    public double leftBackValues(){
+        return leftBack.getCurrentPosition();
+    }
+
 }
