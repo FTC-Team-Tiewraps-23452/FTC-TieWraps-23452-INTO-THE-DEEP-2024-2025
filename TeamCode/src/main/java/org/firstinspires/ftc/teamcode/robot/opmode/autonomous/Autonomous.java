@@ -46,10 +46,10 @@ public class Autonomous extends LinearOpMode {
     }
 
     private void drive(double driveDistance) {
+        mecanumDrivetrain.mecanumDriveResetEncoders();
         double tick_target = driveDistance / TICKS_PER_CENTIMETER;
-        mecanumDrivetrain.mecanumDrivePosition((int)tick_target, 0.1);
-        if (!mecanumDrivetrain.isBusy()) {
-            mecanumDrivetrain.mecanumDrive(0, 0, 0);
+        while (mecanumDrivetrain.onPosition((int) tick_target)) {
+            mecanumDrivetrain.mecanumDrive(0, 0.1, 0);
         }
     }
 

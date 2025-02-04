@@ -77,24 +77,28 @@ public class TeleOP extends OpMode
         telemetry.addData("lift", "position" + lift.liftValues());
 
 
-        //drivetrain
-        if (gamepad1.left_bumper){
-            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-            double x = gamepad1.left_stick_x;
-            double rx = -gamepad1.right_stick_x;
-            mecanumDrivetrain.mecanumDrive(x, y, rx);
-        }if (gamepad1.left_trigger !=0){
-            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-            double x = gamepad1.left_stick_x;
-            double rx = -gamepad1.right_stick_x;
-            mecanumDrivetrain.mecanumDrive(x / 15, y / 15, rx / 15);
-        }else {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
-            double x = gamepad1.left_stick_x;
-            double rx = -gamepad1.right_stick_x;
-            mecanumDrivetrain.mecanumDrive(x / 5,y / 5,rx / 5);
-        }
+//        //drivetrain
+//        if (gamepad1.left_bumper){
+//            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+//            double x = gamepad1.left_stick_x;
+//            double rx = gamepad1.right_stick_x;
+//            mecanumDrivetrain.mecanumDrive(x, y, rx);
+//        }if (gamepad1.left_trigger !=0){
+//            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+//            double x = gamepad1.left_stick_x;
+//            double rx = gamepad1.right_stick_x;
+//            mecanumDrivetrain.mecanumDrive(x / 4, y / 4, rx / 4);
+//        }else {
+//            double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+//            double x = gamepad1.left_stick_x;
+//            double rx = gamepad1.right_stick_x;
+//            mecanumDrivetrain.mecanumDrive(x / 2,y / 2,rx / 2);
+//        }
 
+        double y = -gamepad1.left_stick_y; // Remember, Y stick is reversed!
+        double x = gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_x;
+        mecanumDrivetrain.mecanumDrive(x, y, rx);
 
         //lift
         if (gamepad2.left_stick_y < 0){

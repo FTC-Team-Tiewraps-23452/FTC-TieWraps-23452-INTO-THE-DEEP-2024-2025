@@ -28,20 +28,13 @@ public class MecanumDrivetrain {
         rightBack =  hardwareMap.get(DcMotor.class, "motor2");
         leftBack =  hardwareMap.get(DcMotor.class, "motor3");
 
-        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-
     }
 
     /**
@@ -53,11 +46,6 @@ public class MecanumDrivetrain {
      * @param rx the speed to turn around the z axis from -1 to 1
      */
     public void mecanumDrive(double x, double y, double rx){
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         leftFront.setPower((y + x + rx));
         leftBack.setPower((y - x + rx));
         rightFront.setPower((y - x - rx));
@@ -65,31 +53,30 @@ public class MecanumDrivetrain {
     }
 
     /**
-     * a function to move the mecanum drivetrain a specific distace with a speed and position
-     *
-     * @param position the position in cm from the robot
-     * @param speed the specific speed to go to the position from -1 to 1
+     * a function to reset all of the encoders of the drivetrain
      */
-    public void mecanumDrivePosition(int position, double speed){
+    public void mecanumDriveResetEncoders(){
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 
-        leftFront.setTargetPosition(position);
-        leftBack.setTargetPosition(position);
-        rightFront.setTargetPosition(position);
-        rightBack.setTargetPosition(position);
+    /**
+     * a function to set a desired tick target to the drivetrain
+     *
+     * @param tickTarget the tick target for the drivetrain
+     */
+    public void setTargetPosition(int tickTarget) {
+        leftFront.setTargetPosition(tickTarget);
+        rightFront.setTargetPosition(tickTarget);
+        leftBack.setTargetPosition(tickTarget);
+        rightBack.setTargetPosition(tickTarget);
 
         leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        leftFront.setPower(speed);
-        leftBack.setPower(speed);
-        rightFront.setPower(speed);
-        rightBack.setPower(speed);
     }
 
     /**
@@ -103,15 +90,6 @@ public class MecanumDrivetrain {
                 rightFront.getCurrentPosition() <= position + 5 && rightBack.getCurrentPosition() >= position - 5 &&
                 leftBack.getCurrentPosition() <= position + 5 && leftBack.getCurrentPosition() >= position - 5 &&
                 rightBack.getCurrentPosition() <= position + 5 && rightBack.getCurrentPosition() >= position - 5);
-    }
-
-    /**
-     * a function to check if the drivetrain motors are busy
-     *
-     * @return returns true or false depending on if the drivetrain is busy or not
-     */
-    public Boolean isBusy() {
-        return leftBack.isBusy() && leftFront.isBusy() && rightBack.isBusy() && rightFront.isBusy();
     }
 
     /**
