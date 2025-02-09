@@ -1,8 +1,11 @@
 package org.firstinspires.ftc.teamcode.robot.subsystem;
 
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
+
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class MecanumDrivetrain {
 
@@ -10,6 +13,8 @@ public class MecanumDrivetrain {
     private final DcMotor leftFront;
     private final DcMotor rightBack;
     private final DcMotor leftBack;
+    private final IMU imu;
+
 
 
     /**
@@ -28,8 +33,15 @@ public class MecanumDrivetrain {
         rightBack =  hardwareMap.get(DcMotor.class, "motor2");
         leftBack =  hardwareMap.get(DcMotor.class, "motor3");
 
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        imu = hardwareMap.get(IMU.class, "imu");
+
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftBack.setDirection(DcMotor.Direction.REVERSE);
+
+        IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
+                RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                RevHubOrientationOnRobot.UsbFacingDirection.UP));
+        imu.initialize(parameters);
 
         rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -46,10 +58,16 @@ public class MecanumDrivetrain {
      * @param rx the speed to turn around the z axis from -1 to 1
      */
     public void mecanumDrive(double x, double y, double rx){
-        leftFront.setPower((y + x + rx));
-        leftBack.setPower((y - x + rx));
-        rightFront.setPower((y - x - rx));
-        rightBack.setPower((y + x - rx));
+        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        double rotX = (x * Math.cos(-botHeading) - y * Math.sin(-botHeading)) * 1.1;
+        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+
+        double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
+
+        leftFront.setPower((rotY + rotX + rx) / denominator);
+        leftBack.setPower((rotY - rotX + rx) / denominator);
+        rightFront.setPower((rotY - rotX - rx) / denominator);
+        rightBack.setPower((rotY + rotX - rx) / denominator);
     }
 
     /**
@@ -60,6 +78,16 @@ public class MecanumDrivetrain {
         leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /**
@@ -86,10 +114,17 @@ public class MecanumDrivetrain {
      * @return returns true or false depending on if its on the desired position
      */
     public boolean onPosition(int position){
-        return (leftFront.getCurrentPosition() <= position + 5 && leftFront.getCurrentPosition() >= position - 5 &&
-                rightFront.getCurrentPosition() <= position + 5 && rightBack.getCurrentPosition() >= position - 5 &&
-                leftBack.getCurrentPosition() <= position + 5 && leftBack.getCurrentPosition() >= position - 5 &&
-                rightBack.getCurrentPosition() <= position + 5 && rightBack.getCurrentPosition() >= position - 5);
+        return (leftFront.getCurrentPosition() <= position + 25 && leftFront.getCurrentPosition() >= position - 25 &&
+                rightFront.getCurrentPosition() <= position + 25 && rightBack.getCurrentPosition() >= position - 25 &&
+                leftBack.getCurrentPosition() <= position + 25 && leftBack.getCurrentPosition() >= position - 25 &&
+                rightBack.getCurrentPosition() <= position + 25 && rightBack.getCurrentPosition() >= position - 25);
+    }
+
+    /**
+     * a function to reset the internal imu
+     */
+    public void resetIMU(){
+        imu.resetYaw();
     }
 
     /**
@@ -136,5 +171,33 @@ public class MecanumDrivetrain {
      */
     public double leftBackValues(){
         return leftBack.getCurrentPosition();
+    }
+
+    /**
+     * function to stop the left back motor
+     */
+    public void stopLeftBack(){
+        leftBack.setPower(0);
+    }
+
+    /**
+     * a function to stop the left front motor
+     */
+    public void stopLeftFront(){
+        leftFront.setPower(0);
+    }
+
+    /**
+     * a function to stop the right back motor
+     */
+    public void stopRightBack(){
+        rightBack.setPower(0);
+    }
+
+    /**
+     * a function to stop the right front motor
+     */
+    public void stopRightFront(){
+        rightFront.setPower(0);
     }
 }

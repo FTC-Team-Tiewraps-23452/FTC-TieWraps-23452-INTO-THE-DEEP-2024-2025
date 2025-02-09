@@ -30,18 +30,20 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-        lift.moveServo(-0.75);
-        drive(-20, 0.1);
-        intake.moveIntakePosition(false);
-        lift.moveLiftPosition(true);
-        sleep(2000);
-        drive(-20, 0.1);
-        lift.moveServo(0.75);
-        sleep(1500);
-        lift.moveServo(-0.75);
-        drive(70, 0.2);
-        lift.moveLiftPosition(false);
-        sleep(2000);
+//        lift.moveServo(-0.75);
+//        drive(-20, 0.1);
+//        intake.moveIntakePosition(false);
+//        lift.moveLiftPosition(true);
+//        sleep(2000);
+//        drive(-20, 0.1);
+//        lift.moveServo(0.75);
+//        sleep(1500);
+//        lift.moveServo(-0.75);
+//        drive(70, 0.2);
+//        lift.moveLiftPosition(false);
+//        sleep(2000);
+
+        drive(30, 0.1);
 
 
     }
@@ -56,12 +58,38 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         mecanumDrivetrain.mecanumDriveResetEncoders();
 
         int tick_target = (int) (driveDistance * TICKS_PER_CENTIMETER);
-        mecanumDrivetrain.setTargetPosition(tick_target);
+        mecanumDrivetrain.setTargetPosition(-tick_target);
 
-        while (!mecanumDrivetrain.onPosition(tick_target) && opModeIsActive()) {
-            mecanumDrivetrain.mecanumDrive(0, speed, 0);
+        boolean leftBackDone = false, leftFrontDone = false, rightBackDone = false, rightFrontDone = false;
+
+        while ((!(leftBackDone && leftFrontDone && rightBackDone && rightFrontDone)) && opModeIsActive()) {
+            if (!leftBackDone && mecanumDrivetrain.leftBackValues() <= tick_target + 10 && mecanumDrivetrain.leftBackValues() >= tick_target - 10) {
+                mecanumDrivetrain.stopLeftBack();
+                leftBackDone = true;
+            }
+            if (!leftFrontDone && mecanumDrivetrain.leftFrontValues() <= tick_target + 10 && mecanumDrivetrain.leftFrontValues() >= tick_target - 10) {
+                mecanumDrivetrain.stopLeftFront();
+                leftFrontDone = true;
+            }
+            if (!rightBackDone && mecanumDrivetrain.rightBackValues() <= tick_target + 10 && mecanumDrivetrain.rightBackValues() >= tick_target - 10) {
+                mecanumDrivetrain.stopRightBack();
+                rightBackDone = true;
+            }
+            if (!rightFrontDone && mecanumDrivetrain.rightFrontValues() <= tick_target + 10 && mecanumDrivetrain.rightFrontValues() >= tick_target - 10) {
+                mecanumDrivetrain.stopRightFront();
+                rightFrontDone = true;
+            }
+
+            if (opModeIsActive()) {
+                mecanumDrivetrain.mecanumDrive(0, speed, 0);
+            }
+
+            telemetry.addData("position", "leftBack: " + mecanumDrivetrain.leftBackValues());
+            telemetry.addData("position", "leftFront: " + mecanumDrivetrain.leftFrontValues());
+            telemetry.addData("position", "rightFront: " + mecanumDrivetrain.rightFrontValues());
+            telemetry.addData("position", "rightBack: " + mecanumDrivetrain.rightBackValues());
+            telemetry.addData("target position", + tick_target);
+            telemetry.update();
         }
-        mecanumDrivetrain.stopAll();
     }
-
 }
