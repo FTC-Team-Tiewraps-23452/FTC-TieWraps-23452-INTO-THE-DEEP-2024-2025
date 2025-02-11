@@ -30,21 +30,18 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-//        lift.moveServo(-0.75);
-//        drive(-20, 0.1);
-//        intake.moveIntakePosition(false);
-//        lift.moveLiftPosition(true);
-//        sleep(2000);
-//        drive(-20, 0.1);
-//        lift.moveServo(0.75);
-//        sleep(1500);
-//        lift.moveServo(-0.75);
-//        drive(70, 0.2);
-//        lift.moveLiftPosition(false);
-//        sleep(2000);
-
-        drive(30, 0.1);
-
+        lift.moveServo(-0.75);
+        drive(20, 0.1);
+        intake.moveIntakePosition(false);
+        lift.moveLiftPosition(true);
+        sleep(2000);
+        drive(20, 0.1);
+        lift.moveServo(0.75);
+        sleep(1500);
+        lift.moveServo(-0.75);
+        drive(-70, 0.2);
+        lift.moveLiftPosition(false);
+        sleep(2000);
 
     }
 
@@ -52,9 +49,9 @@ public class Autonomous_score_2_basket extends LinearOpMode {
      * function to drive to calculate and run the movement to a desired position
      *
      * @param driveDistance the distance desired to be driven in cm from the robot
-     * @param speed the speed for the drivetrain to drive with
+     * @param maxSpeed the speed for the drivetrain to drive with
      */
-    private void drive(double driveDistance, double speed) {
+    private void drive(double driveDistance, double maxSpeed) {
         mecanumDrivetrain.mecanumDriveResetEncoders();
 
         int tick_target = (int) (driveDistance * TICKS_PER_CENTIMETER);
@@ -63,24 +60,30 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         boolean leftBackDone = false, leftFrontDone = false, rightBackDone = false, rightFrontDone = false;
 
         while ((!(leftBackDone && leftFrontDone && rightBackDone && rightFrontDone)) && opModeIsActive()) {
-            if (!leftBackDone && mecanumDrivetrain.leftBackValues() <= tick_target + 10 && mecanumDrivetrain.leftBackValues() >= tick_target - 10) {
+            if (!leftBackDone && mecanumDrivetrain.leftBackValues() >= tick_target) {
                 mecanumDrivetrain.stopLeftBack();
                 leftBackDone = true;
             }
-            if (!leftFrontDone && mecanumDrivetrain.leftFrontValues() <= tick_target + 10 && mecanumDrivetrain.leftFrontValues() >= tick_target - 10) {
+            if (!leftFrontDone && mecanumDrivetrain.leftFrontValues() >= tick_target) {
                 mecanumDrivetrain.stopLeftFront();
                 leftFrontDone = true;
             }
-            if (!rightBackDone && mecanumDrivetrain.rightBackValues() <= tick_target + 10 && mecanumDrivetrain.rightBackValues() >= tick_target - 10) {
+            if (!rightBackDone && mecanumDrivetrain.rightBackValues() >= tick_target) {
                 mecanumDrivetrain.stopRightBack();
                 rightBackDone = true;
             }
-            if (!rightFrontDone && mecanumDrivetrain.rightFrontValues() <= tick_target + 10 && mecanumDrivetrain.rightFrontValues() >= tick_target - 10) {
+            if (!rightFrontDone && mecanumDrivetrain.rightFrontValues() >= tick_target) {
                 mecanumDrivetrain.stopRightFront();
                 rightFrontDone = true;
             }
 
             if (opModeIsActive()) {
+                double currentDistance = (mecanumDrivetrain.leftBackValues() + mecanumDrivetrain.leftFrontValues() +
+                        mecanumDrivetrain.rightBackValues() + mecanumDrivetrain.rightFrontValues()) / 4.0;
+
+                double remainingDistance = tick_target - currentDistance;
+                double speed = maxSpeed * (remainingDistance / tick_target);
+
                 mecanumDrivetrain.mecanumDrive(0, speed, 0);
             }
 
@@ -88,7 +91,7 @@ public class Autonomous_score_2_basket extends LinearOpMode {
             telemetry.addData("position", "leftFront: " + mecanumDrivetrain.leftFrontValues());
             telemetry.addData("position", "rightFront: " + mecanumDrivetrain.rightFrontValues());
             telemetry.addData("position", "rightBack: " + mecanumDrivetrain.rightBackValues());
-            telemetry.addData("target position", + tick_target);
+            telemetry.addData("target position", tick_target);
             telemetry.update();
         }
     }
