@@ -50,12 +50,12 @@ public class MecanumDrivetrain {
     }
 
     /**
-     * a function to move the mecanum drivetrain with a specific speed
+     * a method to move the drivetrain with a specific speed
      * with an x, y and rx parameter
      *
-     * @param x the speed in the x axis from -1 to 1
-     * @param y the speed in the y axis from -1 to 1
-     * @param rx the speed to turn around the z axis from -1 to 1
+     * @param x the speed in the x axis from ranging from -1 to 1
+     * @param y the speed in the y axis from ranging from -1 to 1
+     * @param rx the speed to turn around the z axis ranging from from -1 to 1
      */
     public void mecanumDrive(double x, double y, double rx){
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);

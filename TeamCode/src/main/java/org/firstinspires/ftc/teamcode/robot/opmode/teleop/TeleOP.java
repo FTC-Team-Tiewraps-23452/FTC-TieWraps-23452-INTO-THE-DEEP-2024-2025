@@ -77,7 +77,7 @@ public class TeleOP extends OpMode
         telemetry.addData("lift", "position" + lift.liftValues());
 
 
-//        //drivetrain
+        //drivetrain
         if (gamepad1.left_bumper){
             double y = -gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x ;
