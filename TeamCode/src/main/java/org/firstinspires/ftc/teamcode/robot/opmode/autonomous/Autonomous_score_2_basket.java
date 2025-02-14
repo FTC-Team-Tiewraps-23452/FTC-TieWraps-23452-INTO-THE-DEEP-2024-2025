@@ -15,6 +15,9 @@ public class Autonomous_score_2_basket extends LinearOpMode {
     double WHEEL_CIRCUMFERENCE = 30.1593;
     double ENCODER_RESOLUTION = 537.7;
     double TICKS_PER_CENTIMETER = ENCODER_RESOLUTION / WHEEL_CIRCUMFERENCE;
+    double kP = 0.5;
+    int errorMargin = 5;
+
 
     @Override
     public void runOpMode() {
@@ -31,48 +34,53 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         runtime.reset();
 
         lift.moveServo(-0.75);
-        drive(20, 0.1);
+        drive(20, kP, 0.2);
         intake.moveIntakePosition(false);
         lift.moveLiftPosition(true);
         sleep(2000);
-        drive(20, 0.1);
+        drive(20, kP, 0.2);
         lift.moveServo(0.75);
         sleep(1500);
         lift.moveServo(-0.75);
-        drive(-70, 0.2);
+        drive(-70, kP, 0.2);
         lift.moveLiftPosition(false);
         sleep(2000);
 
     }
 
     /**
-     * function to drive to calculate and run the movement to a desired position
+     * Function to calculate and execute the movement of the robot to a desired position.
      *
-     * @param driveDistance the distance desired to be driven in cm from the robot
-     * @param maxSpeed the speed for the drivetrain to drive with
+     * @param driveDistance the distance that the robot should drive from its current position
+     * @param kP the proportional gain used in the PID controller to adjust the speed based on the remaining distance
+     * @param maxSpeed the maximum speed that the drivetrain can achieve while driving
      */
-    private void drive(double driveDistance, double maxSpeed) {
+    private void drive(double driveDistance, double kP, double maxSpeed) {
         mecanumDrivetrain.mecanumDriveResetEncoders();
 
         int tick_target = (int) (driveDistance * TICKS_PER_CENTIMETER);
-        mecanumDrivetrain.setTargetPosition(-tick_target);
+        mecanumDrivetrain.setTargetPosition(tick_target);
 
         boolean leftBackDone = false, leftFrontDone = false, rightBackDone = false, rightFrontDone = false;
 
         while ((!(leftBackDone && leftFrontDone && rightBackDone && rightFrontDone)) && opModeIsActive()) {
-            if (!leftBackDone && mecanumDrivetrain.leftBackValues() >= tick_target) {
+            if (!leftBackDone && (mecanumDrivetrain.leftBackValues() >= tick_target - errorMargin &&
+                    mecanumDrivetrain.leftBackValues() <= tick_target + errorMargin)) {
                 mecanumDrivetrain.stopLeftBack();
                 leftBackDone = true;
             }
-            if (!leftFrontDone && mecanumDrivetrain.leftFrontValues() >= tick_target) {
+            if (!leftFrontDone && (mecanumDrivetrain.leftFrontValues() >= tick_target - errorMargin &&
+                    mecanumDrivetrain.leftFrontValues() <= tick_target + errorMargin)) {
                 mecanumDrivetrain.stopLeftFront();
                 leftFrontDone = true;
             }
-            if (!rightBackDone && mecanumDrivetrain.rightBackValues() >= tick_target) {
+            if (!rightBackDone && (mecanumDrivetrain.rightBackValues() >= tick_target - errorMargin &&
+                    mecanumDrivetrain.rightBackValues() <= tick_target + errorMargin)) {
                 mecanumDrivetrain.stopRightBack();
                 rightBackDone = true;
             }
-            if (!rightFrontDone && mecanumDrivetrain.rightFrontValues() >= tick_target) {
+            if (!rightFrontDone && (mecanumDrivetrain.rightFrontValues() >= tick_target - errorMargin &&
+                    mecanumDrivetrain.rightFrontValues() <= tick_target + errorMargin)) {
                 mecanumDrivetrain.stopRightFront();
                 rightFrontDone = true;
             }
@@ -82,7 +90,9 @@ public class Autonomous_score_2_basket extends LinearOpMode {
                         mecanumDrivetrain.rightBackValues() + mecanumDrivetrain.rightFrontValues()) / 4.0;
 
                 double remainingDistance = tick_target - currentDistance;
-                double speed = maxSpeed * (remainingDistance / tick_target);
+                double speed = kP * (remainingDistance / tick_target);
+
+                speed = Math.max(-maxSpeed, Math.min(speed, maxSpeed));
 
                 mecanumDrivetrain.mecanumDrive(0, speed, 0);
             }
