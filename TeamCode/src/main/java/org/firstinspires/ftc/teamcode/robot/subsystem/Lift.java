@@ -39,16 +39,15 @@ public class Lift {
     public void moveLiftPosition(boolean direction) {
         //if true
         if (direction) {
-            liftMotor.setTargetPosition(-5800);
+            liftMotor.setTargetPosition(-2541);
             liftMotor.setPower(1);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
         //if false
-        else {
-            liftMotor.setTargetPosition(-3200);
-            liftMotor.setPower(-0.5);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if (!direction) {
+            liftMotor.setTargetPosition(-41);
+            liftMotor.setPower(0.5);
         }
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /**
@@ -83,8 +82,11 @@ public class Lift {
      *
      * @return returns the current position
      */
-    public double liftValues(){
+    public double liftServoValues(){
         return liftServo.getPosition();
+    }
+    public double liftMotorValues(){
+        return liftMotor.getCurrentPosition();
     }
 }
 

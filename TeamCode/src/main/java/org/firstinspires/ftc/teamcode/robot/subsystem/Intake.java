@@ -36,12 +36,12 @@ public class Intake {
         //if true
         if (direction) {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(-3);
+            storeMotor.setTargetPosition(2);
         }
         //if false
-        else {
+        if (!direction) {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(416);
+            storeMotor.setTargetPosition(384);
         }
         storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }

@@ -74,7 +74,8 @@ public class TeleOP extends OpMode
         telemetry.addData("drivetrain", "leftBack: " + mecanumDrivetrain.leftBackValues());
 
         telemetry.addData("intake", "position" + intake.intakeValues());
-        telemetry.addData("lift", "position" + lift.liftValues());
+        telemetry.addData("lift servo", "position" + lift.liftServoValues());
+        telemetry.addData("lift Motor", "position" + lift.liftMotorValues());
 
 
         //drivetrain
@@ -121,6 +122,7 @@ public class TeleOP extends OpMode
         if (gamepad1.start && gamepad1.y) {
             mecanumDrivetrain.resetIMU();
         }
+
 
         //intake
         intake.moveIntake(gamepad2.right_stick_y / 5);

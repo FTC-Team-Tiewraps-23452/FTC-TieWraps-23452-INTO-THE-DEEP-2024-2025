@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.robot.opmode.autonomous;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.robot.subsystem.*;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous score 2 basket", group="Linear OpMode")
-public class Autonomous_score_2_basket extends LinearOpMode {
+import org.firstinspires.ftc.teamcode.robot.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.robot.subsystem.Lift;
+import org.firstinspires.ftc.teamcode.robot.subsystem.MecanumDrivetrain;
+
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous score 2 basket park", group="Linear OpMode")
+public class Autonomous_score_2_basket_park extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();
 
@@ -48,8 +52,8 @@ public class Autonomous_score_2_basket extends LinearOpMode {
         sleep(200);
         lift.moveLiftPosition(false);
         sleep(5000);
-//        intake.moveIntakePosition(true);
-//        drive(-165, kP/4, 0.05);
+        intake.moveIntakePosition(true);
+        drive(-165, kP/4, 0.05);
 
 //        // cycle 2
 //        mecanumDrivetrain.mecanumDrive(0, 0, 0.2);
