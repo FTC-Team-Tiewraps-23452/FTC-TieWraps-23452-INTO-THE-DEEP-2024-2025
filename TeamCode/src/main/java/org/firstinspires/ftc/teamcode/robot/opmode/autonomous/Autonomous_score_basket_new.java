@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.robot.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.robot.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.robot.subsystem.MecanumDrivetrain;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous score basket", group="Linear OpMode")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous score basket new", group="Linear OpMode")
 public class Autonomous_score_basket_new extends LinearOpMode {
 
     private final ElapsedTime runtime = new ElapsedTime();

@@ -4,9 +4,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.robot.subsystem.Intake;
-import org.firstinspires.ftc.teamcode.robot.subsystem.Lift;
-import org.firstinspires.ftc.teamcode.robot.subsystem.MecanumDrivetrain;
+import org.firstinspires.ftc.teamcode.robot.subsystem.*;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Autonomous", group="Linear OpMode")
 public class Autonomous extends LinearOpMode {
@@ -48,10 +46,10 @@ public class Autonomous extends LinearOpMode {
     }
 
     private void drive(double driveDistance) {
+        mecanumDrivetrain.mecanumDriveResetEncoders();
         double tick_target = driveDistance / TICKS_PER_CENTIMETER;
-        mecanumDrivetrain.mecanumDrivePosition((int)tick_target);
-        if (!mecanumDrivetrain.isBusy()) {
-            mecanumDrivetrain.mecanumDrive(0, 0, 0);
+        while (mecanumDrivetrain.onPosition((int) tick_target)) {
+            mecanumDrivetrain.mecanumDrive(0, 0.1, 0);
         }
     }
 

@@ -11,7 +11,16 @@ public class Lift {
     private final Servo liftServo;
 
 
-
+    /**
+     * This is the constructor of the subsystem
+     * This is the function that will be run when the subsystem is created,
+     * which happens at the beginning of an OpMode.
+     * The constructor should have the same name as the class
+     *
+     * @param hardwareMap This is the input of the constructor, which will be used
+     *                    to link the motors and servos in the code to the motors and servos
+     *                    on the actual robot
+     */
     public Lift(HardwareMap hardwareMap){
         liftMotor = hardwareMap.get(DcMotor.class, "liftMotor");
         liftServo = hardwareMap.get(Servo.class, "storeBoxServo");
@@ -22,22 +31,32 @@ public class Lift {
         liftServo.setDirection(Servo.Direction.FORWARD);
     }
 
-    //true is up and false is down
+    /**
+     * a function to set the lift position to go upwards (true) or go downwards (false).
+     *
+     * @param direction the direction true or false
+     */
     public void moveLiftPosition(boolean direction) {
-        //if false
-        if (direction) {
-            liftMotor.setTargetPosition(-5800);
-            liftMotor.setPower(1);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
         //if true
-        else if (!direction){
-            liftMotor.setTargetPosition(-3200);
-            liftMotor.setPower(-0.5);
-            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if (direction) {
+            liftMotor.setTargetPosition(-2541);
+            liftMotor.setPower(1);
         }
+        //if false
+        if (!direction) {
+            liftMotor.setTargetPosition(-41);
+            liftMotor.setPower(0.5);
+        }
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    /**
+     * a function to set the position of the lift servo
+     * while moving in reverse when the position is smaller than 0
+     * and moving forwards if the value is greater than 0
+     *
+     * @param position the position for the servo to go to
+     */
     public void moveServo(double position){
         if (position < 0) {
             liftServo.setDirection(Servo.Direction.REVERSE);
@@ -49,12 +68,25 @@ public class Lift {
         }
     }
 
+    /**
+     * a function to set the speed of the lift motor with 1 and -1 being max speed and 0 to stop
+     *
+     * @param speed the speed for the motor
+     */
     public void moveLift(double speed) {
         liftMotor.setPower(speed);
     }
 
-    public double liftValues(){
+    /**
+     * a function to read the current position of the lift motor
+     *
+     * @return returns the current position
+     */
+    public double liftServoValues(){
         return liftServo.getPosition();
+    }
+    public double liftMotorValues(){
+        return liftMotor.getCurrentPosition();
     }
 }
 
