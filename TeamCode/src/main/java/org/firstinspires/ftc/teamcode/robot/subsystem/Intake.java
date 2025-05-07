@@ -9,17 +9,6 @@ public class Intake {
     private final CRServo intakeServo;
     private final DcMotor storeMotor;
 
-
-    /**
-     * This is the constructor of the subsystem
-     * This is the function that will be run when the subsystem is created,
-     * which happens at the beginning of an OpMode.
-     * The constructor should have the same name as the class
-     *
-     * @param hardwareMap This is the input of the constructor, which will be used
-     *                    to link the motors and servos in the code to the motors and servos
-     *                    on the actual robot
-     */
     public Intake(HardwareMap hardwareMap) {
         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
         storeMotor = hardwareMap.get(DcMotor.class, "storeMotor");
@@ -27,48 +16,29 @@ public class Intake {
         storeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    /**
-     * a function to set the intake position to go upwards (true) or go downwards (false).
-     *
-     * @param direction the direction true or false
-     */
+    //true is to intake position false is to store position
     public void moveIntakePosition(boolean direction) {
         //if true
         if (direction) {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(2);
+            storeMotor.setTargetPosition(-3);
         }
         //if false
-        if (!direction) {
+        else {
             storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(384);
+            storeMotor.setTargetPosition(416);
         }
         storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    /**
-     * a function to set the speed of the intake store motor with 1 and -1 being max speed and 0 to stop
-     *
-     * @param speed the speed for the motor
-     */
     public void moveIntake(double speed){
         storeMotor.setPower(speed);
     }
 
-    /**
-     * a function to set the speed of the intake servo with 1 and -1 being max speed and 0 to stop
-     *
-     * @param speed the speed for the servo
-     */
     public void setIntakeServoSpeed(double speed){
         intakeServo.setPower(speed);
     }
 
-    /**
-     * a function to read the current position of the intake motor
-     *
-     * @return returns the current position
-     */
     public int intakeValues(){
         return storeMotor.getCurrentPosition();
     }
