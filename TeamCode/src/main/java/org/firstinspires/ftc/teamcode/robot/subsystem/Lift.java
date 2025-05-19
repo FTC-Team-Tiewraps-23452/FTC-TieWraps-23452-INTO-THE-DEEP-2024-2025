@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.subsystem;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -31,23 +35,74 @@ public class Lift {
         liftServo.setDirection(Servo.Direction.FORWARD);
     }
 
-    /**
-     * a function to set the lift position to go upwards (true) or go downwards (false).
-     *
-     * @param direction the direction true or false
-     */
-    public void moveLiftPosition(boolean direction) {
-        //if true
-        if (direction) {
-            liftMotor.setTargetPosition(-2541);
-            liftMotor.setPower(1);
+    public class Up implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                liftMotor.setPower(1);
+                initialized = true;
+            }
+
+            double pos = liftMotor.getCurrentPosition();
+            packet.put("liftPos", pos);
+            if (pos > -2541) {
+                return true;
+            } else {
+                liftMotor.setPower(0);
+                return false;
+            }
         }
-        //if false
-        if (!direction) {
-            liftMotor.setTargetPosition(-41);
-            liftMotor.setPower(0.5);
+    }
+    public Action up() {
+        return new Up();
+    }
+
+    public class Down implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                liftMotor.setPower(0.5);
+                initialized = true;
+            }
+
+            double pos = liftMotor.getCurrentPosition();
+            packet.put("liftPos", pos);
+            if (pos < -41) {
+                return true;
+            } else {
+                liftMotor.setPower(0);
+                return false;
+            }
         }
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+    public Action down() {
+        return new Down();
+    }
+
+    public class BasketUp implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            liftServo.setPosition(0.80);
+            return false;
+        }
+    }
+    public Action basketUp() {
+        return new BasketUp();
+    }
+
+    public class BasketDown implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            liftServo.setPosition(0.80);
+            return false;
+        }
+    }
+    public Action basketDown() {
+        return new BasketDown();
     }
 
     /**

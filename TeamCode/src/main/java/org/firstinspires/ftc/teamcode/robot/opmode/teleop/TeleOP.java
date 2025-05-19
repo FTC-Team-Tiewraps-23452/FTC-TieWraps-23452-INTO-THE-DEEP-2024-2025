@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.robot.subsystem.Lift;
 import org.firstinspires.ftc.teamcode.robot.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.robot.subsystem.MecanumDrivetrain;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 
 @TeleOp(name="TeleOP-IntoTheDeep-", group="Iterative Opmode")
@@ -98,9 +99,9 @@ public class TeleOP extends OpMode
 
         //lift
         if (gamepad2.left_stick_y < 0){
-            lift.moveLift(gamepad2.left_stick_y);
+            lift.up();
         } else {
-            lift.moveLift(gamepad2.left_stick_y * 0.5);
+            lift.down();
         }
 
         //bakje lift

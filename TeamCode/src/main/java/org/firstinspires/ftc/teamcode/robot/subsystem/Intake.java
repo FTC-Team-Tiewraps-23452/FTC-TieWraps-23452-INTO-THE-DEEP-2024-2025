@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.robot.subsystem;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -16,19 +20,75 @@ public class Intake {
         storeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    //true is to intake position false is to store position
-    public void moveIntakePosition(boolean direction) {
-        //if true
-        if (direction) {
-            storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(-3);
+
+    public class armOut implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                storeMotor.setPower(0.2);
+                initialized = true;
+            }
+
+            double pos = storeMotor.getCurrentPosition();
+            packet.put("liftPos", pos);
+            if (pos > -3) {
+                return true;
+            } else {
+                storeMotor.setPower(0);
+                return false;
+            }
         }
-        //if false
-        else {
-            storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(416);
+    }
+    public Action armOut() {
+        return new armOut();
+    }
+
+    public class armIn implements Action {
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            if (!initialized) {
+                storeMotor.setPower(0.2);
+                initialized = true;
+            }
+
+            double pos = storeMotor.getCurrentPosition();
+            packet.put("liftPos", pos);
+            if (pos < 416) {
+                return true;
+            } else {
+                storeMotor.setPower(0);
+                return false;
+            }
         }
-        storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+    public Action armIn() {
+        return new armIn();
+    }
+
+    public class intake implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            intakeServo.setPower(1);
+            return false;
+        }
+    }
+    public Action intake() {
+        return new intake();
+    }
+
+    public class outtake implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            intakeServo.setPower(-1);
+            return false;
+        }
+    }
+    public Action outtake() {
+        return new outtake();
     }
 
     public void moveIntake(double speed){
