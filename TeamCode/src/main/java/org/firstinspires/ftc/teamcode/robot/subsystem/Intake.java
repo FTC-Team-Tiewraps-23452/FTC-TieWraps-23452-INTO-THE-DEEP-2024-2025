@@ -28,25 +28,6 @@ public class Intake {
     }
 
     /**
-     * a function to set the intake position to go upwards (true) or go downwards (false).
-     *
-     * @param direction the direction true or false
-     */
-    public void moveIntakePosition(boolean direction) {
-        //if true
-        if (direction) {
-            storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(2);
-        }
-        //if false
-        if (!direction) {
-            storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(384);
-        }
-        storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    /**
      * a function to set the speed of the intake store motor with 1 and -1 being max speed and 0 to stop
      *
      * @param speed the speed for the motor
@@ -62,14 +43,5 @@ public class Intake {
      */
     public void setIntakeServoSpeed(double speed){
         intakeServo.setPower(speed);
-    }
-
-    /**
-     * a function to read the current position of the intake motor
-     *
-     * @return returns the current position
-     */
-    public int intakeValues(){
-        return storeMotor.getCurrentPosition();
     }
 }

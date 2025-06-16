@@ -32,25 +32,6 @@ public class Lift {
     }
 
     /**
-     * a function to set the lift position to go upwards (true) or go downwards (false).
-     *
-     * @param direction the direction true or false
-     */
-    public void moveLiftPosition(boolean direction) {
-        //if true
-        if (direction) {
-            liftMotor.setTargetPosition(-2541);
-            liftMotor.setPower(1);
-        }
-        //if false
-        if (!direction) {
-            liftMotor.setTargetPosition(-41);
-            liftMotor.setPower(0.5);
-        }
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    /**
      * a function to set the position of the lift servo
      * while moving in reverse when the position is smaller than 0
      * and moving forwards if the value is greater than 0
@@ -75,18 +56,6 @@ public class Lift {
      */
     public void moveLift(double speed) {
         liftMotor.setPower(speed);
-    }
-
-    /**
-     * a function to read the current position of the lift motor
-     *
-     * @return returns the current position
-     */
-    public double liftServoValues(){
-        return liftServo.getPosition();
-    }
-    public double liftMotorValues(){
-        return liftMotor.getCurrentPosition();
     }
 }
 

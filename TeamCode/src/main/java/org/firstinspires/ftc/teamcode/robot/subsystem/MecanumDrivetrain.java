@@ -50,12 +50,12 @@ public class MecanumDrivetrain {
     }
 
     /**
-     * a method to move the drivetrain with a specific speed
+     * a function to move the mecanum drivetrain with a specific speed
      * with an x, y and rx parameter
      *
-     * @param x the speed in the x axis from ranging from -1 to 1
-     * @param y the speed in the y axis from ranging from -1 to 1
-     * @param rx the speed to turn around the z axis ranging from from -1 to 1
+     * @param x the speed in the x axis from -1 to 1
+     * @param y the speed in the y axis from -1 to 1
+     * @param rx the speed to turn around the z axis from -1 to 1
      */
     public void mecanumDrive(double x, double y, double rx){
         double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -71,135 +71,9 @@ public class MecanumDrivetrain {
     }
 
     /**
-     * a function to reset all of the encoders of the drivetrain
-     */
-    public void mecanumDriveResetEncoders(){
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-    }
-
-    /**
-     * a function to set a desired tick target to the drivetrain
-     *
-     * @param tickTarget the tick target for the drivetrain
-     */
-    public void setTargetPosition(int tickTarget) {
-        leftFront.setTargetPosition(tickTarget);
-        rightFront.setTargetPosition(tickTarget);
-        leftBack.setTargetPosition(tickTarget);
-        rightBack.setTargetPosition(tickTarget);
-
-        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    /**
-     * a function to check if the robot is on its desired position
-     *
-     * @param position the desired position in ticks
-     * @return returns true or false depending on if its on the desired position
-     */
-    public boolean onPosition(int position){
-        return (leftFront.getCurrentPosition() <= position + 25 && leftFront.getCurrentPosition() >= position - 25 &&
-                rightFront.getCurrentPosition() <= position + 25 && rightBack.getCurrentPosition() >= position - 25 &&
-                leftBack.getCurrentPosition() <= position + 25 && leftBack.getCurrentPosition() >= position - 25 &&
-                rightBack.getCurrentPosition() <= position + 25 && rightBack.getCurrentPosition() >= position - 25);
-    }
-
-    /**
      * a function to reset the internal imu
      */
     public void resetIMU(){
         imu.resetYaw();
     }
-
-    /**
-     * a function to stop all of the drivetrain motors
-     */
-    public void stopAll(){
-        leftFront.setPower(0);
-        leftBack.setPower(0);
-        rightFront.setPower(0);
-        rightBack.setPower(0);
-    }
-
-    /**
-     * function to read the right front motor position
-     *
-     * @return returns the current position
-     */
-    public double rightFrontValues(){
-        return rightFront.getCurrentPosition();
-    }
-
-    /**
-     * function to read the left front motor position
-     *
-     * @return returns the current position
-     */
-    public double leftFrontValues(){
-        return leftFront.getCurrentPosition();
-    }
-
-    /**
-     * function to read the right back motor position
-     *
-     * @return returns the current position
-     */
-    public double rightBackValues(){
-        return rightBack.getCurrentPosition();
-    }
-
-    /**
-     * function to read the left back motor position
-     *
-     * @return returns the current position
-     */
-
-    public double leftBackValues(){
-        return leftBack.getCurrentPosition();
-    }
-
-    /**
-     * function to stop the left back motor
-     */
-    public void stopLeftBack(){
-        leftBack.setPower(0);
-    }
-
-    /**
-     * a function to stop the left front motor
-     */
-    public void stopLeftFront(){
-        leftFront.setPower(0);
-    }
-
-    /**
-     * a function to stop the right back motor
-     */
-    public void stopRightBack(){
-        rightBack.setPower(0);
-    }
-
-    /**
-     * a function to stop the right front motor
-     */
-    public void stopRightFront(){
-        rightFront.setPower(0);
-    }
-
 }

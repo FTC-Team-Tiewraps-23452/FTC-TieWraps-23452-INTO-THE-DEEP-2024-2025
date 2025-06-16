@@ -67,34 +67,11 @@ public class TeleOP extends OpMode
      */
     @Override
     public void loop() {
-
-        telemetry.addData("drivetrain", "rightFront: " + mecanumDrivetrain.rightFrontValues());
-        telemetry.addData("drivetrain", "leftFront: " + mecanumDrivetrain.leftFrontValues());
-        telemetry.addData("drivetrain", "rightBack: " + mecanumDrivetrain.rightBackValues());
-        telemetry.addData("drivetrain", "leftBack: " + mecanumDrivetrain.leftBackValues());
-
-        telemetry.addData("intake", "position" + intake.intakeValues());
-        telemetry.addData("lift servo", "position" + lift.liftServoValues());
-        telemetry.addData("lift Motor", "position" + lift.liftMotorValues());
-
-
         //drivetrain
-        if (gamepad1.left_bumper){
-            double y = -gamepad1.left_stick_y;
-            double x = gamepad1.left_stick_x ;
-            double rx = gamepad1.right_stick_x;
-            mecanumDrivetrain.mecanumDrive(x, y, rx);
-        }if (gamepad1.left_trigger !=0){
-            double y = -gamepad1.left_stick_y;
-            double x = gamepad1.left_stick_x;
-            double rx = gamepad1.right_stick_x;
-            mecanumDrivetrain.mecanumDrive(x / 4, y / 4, rx / 4);
-        }else {
-            double y = -gamepad1.left_stick_y;
-            double x = gamepad1.left_stick_x;
-            double rx = gamepad1.right_stick_x;
-            mecanumDrivetrain.mecanumDrive(x / 2,y / 2,rx / 2);
-        }
+        double y = -gamepad1.left_stick_y;
+        double x = gamepad1.left_stick_x;
+        double rx = gamepad1.right_stick_x;
+        mecanumDrivetrain.mecanumDrive(x / 2,y / 2,rx / 2);
 
         //lift
         if (gamepad2.left_stick_y < 0){
@@ -122,7 +99,6 @@ public class TeleOP extends OpMode
         if (gamepad1.start && gamepad1.y) {
             mecanumDrivetrain.resetIMU();
         }
-
 
         //intake
         intake.moveIntake(gamepad2.right_stick_y / 5);
