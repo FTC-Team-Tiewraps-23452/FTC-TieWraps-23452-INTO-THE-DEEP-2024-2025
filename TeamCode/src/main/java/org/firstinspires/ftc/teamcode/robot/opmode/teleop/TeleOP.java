@@ -84,7 +84,7 @@ public class TeleOP extends OpMode
             double x = gamepad1.left_stick_x ;
             double rx = gamepad1.right_stick_x;
             mecanumDrivetrain.mecanumDrive(x, y, rx);
-        }if (gamepad1.left_trigger !=0){
+        }if (gamepad1.left_trigger >= 0.1){
             double y = -gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
@@ -105,18 +105,18 @@ public class TeleOP extends OpMode
 
         //bakje lift
         if (gamepad1.right_bumper) {
-            lift.moveServo(0.80);
+            lift.moveServoDown();
         } else {
-            lift.moveServo(1);
+            lift.moveServoUp();
         }
 
         //Intake servo
         if (gamepad2.right_bumper) {
-            intake.setIntakeServoSpeed(1.0);
+            intake.intakeServoIn();
         } else if (gamepad2.left_bumper){
-            intake.setIntakeServoSpeed(-1.0);
+            intake.intakeServoOut();
         } else {
-            intake.setIntakeServoSpeed(0.0);
+            intake.intakeServoOff();
         }
 
         if (gamepad1.start && gamepad1.y) {
@@ -125,7 +125,11 @@ public class TeleOP extends OpMode
 
 
         //intake
-        intake.moveIntake(gamepad2.right_stick_y / 5);
+        if (gamepad2.right_stick_y <= -0.1) {
+            intake.moveIntakeUp();
+        } else if (gamepad2.right_stick_y >= 0.1){
+            intake.moveIntakeDown();
+        }
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.opencv.core.Mat;
+
 public class Intake {
 
     private final CRServo intakeServo;
@@ -28,40 +30,61 @@ public class Intake {
     }
 
     /**
-     * a function to set the intake position to go upwards (true) or go downwards (false).
+     * General method to move intake to a given target position with proportional slowdown.
      *
-     * @param direction the direction true or false
+     * @param targetPos the given target position.
      */
-    public void moveIntakePosition(boolean direction) {
-        //if true
-        if (direction) {
-            storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(2);
+    public void moveIntakeToPosition(int targetPos) {
+        double currentPos = storeMotor.getCurrentPosition();
+        double error = targetPos - currentPos;
+
+        double kP = 0.06;
+        double power = kP * error;
+
+        power = Math.max(-0.3, Math.min(0.3, power));
+
+        storeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        storeMotor.setPower(power);
+
+        if (Math.abs(error) < 10) {
+            storeMotor.setPower(0);
         }
-        //if false
-        if (!direction) {
-            storeMotor.setPower(0.2);
-            storeMotor.setTargetPosition(384);
-        }
-        storeMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     /**
-     * a function to set the speed of the intake store motor with 1 and -1 being max speed and 0 to stop
-     *
-     * @param speed the speed for the motor
+     * Moves intake upwards to predefined position.
      */
-    public void moveIntake(double speed){
-        storeMotor.setPower(speed);
+    public void moveIntakeUp() {
+        moveIntakeToPosition(-380);
     }
 
     /**
-     * a function to set the speed of the intake servo with 1 and -1 being max speed and 0 to stop
-     *
-     * @param speed the speed for the servo
+     * Moves intake downwards to predefined position.
      */
-    public void setIntakeServoSpeed(double speed){
-        intakeServo.setPower(speed);
+    public void moveIntakeDown() {
+        moveIntakeToPosition(-70);
+    }
+
+
+    /**
+     * a function to set the intake servo in.
+     */
+    public void intakeServoIn(){
+        intakeServo.setPower(1);
+    }
+
+    /**
+     * a function to set the intake servo out.
+     */
+    public void intakeServoOut(){
+        intakeServo.setPower(-1);
+    }
+
+    /**
+     * a function to set the intake servo off.
+     */
+    public void intakeServoOff(){
+        intakeServo.setPower(0);
     }
 
     /**

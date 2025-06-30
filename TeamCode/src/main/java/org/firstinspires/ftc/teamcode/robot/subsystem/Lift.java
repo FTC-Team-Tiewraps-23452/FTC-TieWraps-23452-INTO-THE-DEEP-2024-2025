@@ -50,22 +50,14 @@ public class Lift {
         liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
-    /**
-     * a function to set the position of the lift servo
-     * while moving in reverse when the position is smaller than 0
-     * and moving forwards if the value is greater than 0
-     *
-     * @param position the position for the servo to go to
-     */
-    public void moveServo(double position){
-        if (position < 0) {
-            liftServo.setDirection(Servo.Direction.REVERSE);
-            liftServo.setPosition(position);
+    public void moveServoUp(){
+        liftServo.setDirection(Servo.Direction.REVERSE);
+        liftServo.setPosition(-1);
+    }
 
-        } else {
-            liftServo.setDirection(Servo.Direction.FORWARD);
-            liftServo.setPosition(position);
-        }
+    public void moveServoDown(){
+        liftServo.setDirection(Servo.Direction.FORWARD);
+        liftServo.setPosition(0.80);
     }
 
     /**

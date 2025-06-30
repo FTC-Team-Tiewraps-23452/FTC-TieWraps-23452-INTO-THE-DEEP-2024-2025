@@ -9,10 +9,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 public class MecanumDrivetrain {
 
-    private final DcMotor rightFront;
-    private final DcMotor leftFront;
-    private final DcMotor rightBack;
-    private final DcMotor leftBack;
+    private final DcMotor rightFront, leftFront, rightBack, leftBack;
     private final IMU imu;
 
 
@@ -58,9 +55,9 @@ public class MecanumDrivetrain {
      * @param rx the speed to turn around the z axis ranging from from -1 to 1
      */
     public void mecanumDrive(double x, double y, double rx){
-        double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-        double rotX = (x * Math.cos(-botHeading) - y * Math.sin(-botHeading)) * 1.1;
-        double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+        double Heading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+        double rotX = (x * Math.cos(-Heading) - y * Math.sin(-Heading)) * 1.1;
+        double rotY = x * Math.sin(-Heading) + y * Math.cos(-Heading);
 
         double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
 
